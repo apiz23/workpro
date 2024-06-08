@@ -3,16 +3,64 @@
 import { useState } from "react";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { DatePickerWithRange } from "@/components/datePickerRange";
-import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import supabase from "@/lib/supabase";
+import { v4 as uuidv4 } from "uuid";
 
 export default function Page() {
 	const [selectedRange, setSelectedRange] = useState(null);
+	const [selectedFile, setSelectedFile] = useState(null);
+	const [medUrl, setMedUrl] = useState("");
 
 	const handleRangeSelect = (range: any) => {
 		setSelectedRange(range);
 	};
+
+	const handleFileChange = (event: any) => {
+		setSelectedFile(event.target.files[0]);
+	};
+
+	const handleSubmit = async () => {
+		if (!selectedRange || !selectedFile) {
+			return;
+		}
+
+		try {
+			const uniqueId = uuidv4();
+			const { data: fileData, error: fileError } = await supabase.storage
+				.from("medical-certificate")
+				.upload(uniqueId, selectedFile);
+
+			if (fileError) {
+				console.error("Error uploading file:", fileError);
+				return;
+			}
+
+			const fileUrlResponse = await supabase.storage
+				.from("public-bucket")
+				.getPublicUrl(`medical-certificate/${fileData?.path}`);
+
+			const fileUrl = fileUrlResponse.data.publicUrl;
+
+			const { data, error } = await supabase.from("medical-leaves").insert([
+				{
+					user_id: sessionStorage.getItem("user-id"), 
+					date_range: selectedRange,
+					medical_certificate_url: fileUrl,
+				},
+			]);
+
+			if (error) {
+				console.error("Error inserting data:", error);
+				return;
+			}
+			setMedUrl(fileUrl);
+		} catch (error) {
+			console.error("Unexpected error:", error);
+		}
+	};
+
 	return (
 		<>
 			<h2 className="scroll-m-20 border-b pb-2 md:text-5xl text-3xl font-semibold tracking-tight first:mt-0">
@@ -23,13 +71,19 @@ export default function Page() {
 					<div className="mb-5 grid grid-cols-1 md:grid-cols-2 gap-3">
 						<DatePickerWithRange onSelectRange={handleRangeSelect} />
 					</div>
-
 					<div className="grid-cols-1">
-						<Input type="file" placeholder="Reasons" />
+						<Input
+							type="file"
+							placeholder="Upload Medical Certificate"
+							onChange={handleFileChange}
+						/>
 					</div>
 				</CardContent>
 				<CardFooter className="flex justify-end">
-					<Button className="inline-block bg-white hover:bg-slate-400 rounded border border-current px-8 text-sm font-medium text-indigo-600 hover:text-white transition hover:scale-110 hover:shadow-xl focus:outline-none focus:ring active:text-indigo-500">
+					<Button
+						className="inline-block bg-white hover:bg-slate-400 rounded border border-current px-8 text-sm font-medium text-indigo-600 hover:text-white transition hover:scale-110 hover:shadow-xl focus:outline-none focus:ring active:text-indigo-500"
+						onClick={handleSubmit}
+					>
 						Submit
 					</Button>
 				</CardFooter>

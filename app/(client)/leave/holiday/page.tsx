@@ -4,14 +4,41 @@ import { useState } from "react";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { DatePickerWithRange } from "@/components/datePickerRange";
 import { Textarea } from "@/components/ui/textarea";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import supabase from "@/lib/supabase";
 
 export default function Page() {
 	const [selectedRange, setSelectedRange] = useState(null);
+	const [reasons, setReasons] = useState("");
 
 	const handleRangeSelect = (range: any) => {
 		setSelectedRange(range);
+	};
+
+	const handleSubmit = async () => {
+		if (!selectedRange || !reasons) {
+			return;
+		}
+
+		try {
+			const userId = sessionStorage.getItem("user-id");
+
+			const { data, error } = await supabase
+				.from("holiday-leaves")
+				.insert([{ user_id: userId, date_range: selectedRange, reason: reasons }]);
+
+			if (error) {
+				console.error("Error inserting data:", error);
+				return;
+			}
+
+			console.log("Data inserted successfully:", data);
+
+			setSelectedRange(null);
+			setReasons("");
+		} catch (error) {
+			console.error("Unexpected error:", error);
+		}
 	};
 
 	return (
@@ -26,11 +53,18 @@ export default function Page() {
 					</div>
 
 					<div className="grid-cols-1">
-						<Textarea placeholder="Reasons" />
+						<Textarea
+							placeholder="Reasons"
+							value={reasons}
+							onChange={(e) => setReasons(e.target.value)}
+						/>
 					</div>
 				</CardContent>
 				<CardFooter className="flex justify-end">
-					<Button className="inline-block bg-white hover:bg-slate-400 rounded border border-current px-8 text-sm font-medium text-indigo-600 hover:text-white transition hover:scale-110 hover:shadow-xl focus:outline-none focus:ring active:text-indigo-500">
+					<Button
+						className="inline-block bg-white hover:bg-slate-400 rounded border border-current px-8 text-sm font-medium text-indigo-600 hover:text-white transition hover:scale-110 hover:shadow-xl focus:outline-none focus:ring active:text-indigo-500"
+						onClick={handleSubmit}
+					>
 						Submit
 					</Button>
 				</CardFooter>

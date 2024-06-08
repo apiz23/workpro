@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../globals.css";
 import Navigation from "@/components/navigation";
+import AuthProvider from "@/components/sessionProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
@@ -23,12 +24,14 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className={inter.className}>
-				<Navigation />
-				<div className="mx-auto max-w-screen-lg px-4 py-44 h-screen">
-					{children}
-				</div>
-			</body>
+			<AuthProvider>
+				<body className={inter.className}>
+					<Navigation />
+					<div className="mx-auto max-w-screen-lg px-4 py-44 h-screen">
+						{children}
+					</div>
+				</body>
+			</AuthProvider>
 		</html>
 	);
 }
