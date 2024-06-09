@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import supabase from "@/lib/supabase";
+import { Dot } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -57,8 +58,13 @@ export default function Login() {
 	};
 
 	return (
-		<main className="min-h-screen max-w-3xl mx-auto items-center justify-between pt-48 md:pt-52 p-16 md:p-24">
-			<Card>
+		<main className="min-h-screen max-w-3xl mx-auto items-center justify-between pt-16 md:pt-44 p-6 md:p-24">
+			<h1 className="scroll-m-20 flex my-5 justify-center text-5xl font-extrabold tracking-wide">
+				<Dot className="h-14 w-14 text-orange-600" />
+				<p className="text-white">APTIV</p>
+				<Dot className="h-14 w-14 text-orange-600" />
+			</h1>
+			<Card className="bg-sky-100 border-sky-400">
 				<CardHeader>
 					<CardTitle className="text-4xl">Welcome to Work Pro</CardTitle>
 				</CardHeader>
@@ -116,7 +122,7 @@ export default function Login() {
 					<Link href="/dashboard">
 						<Button
 							variant="default"
-							className="inline-block mx-auto rounded border bg-whtie border-indigo-600 px-10 text-sm font-medium text-indigo-600 hover:bg-indigo-600 hover:text-white focus:outline-none focus:ring active:bg-indigo-500"
+							className="inline-block mx-auto rounded border bg-white border-blue-600 px-10 text-sm font-medium text-blue-600 hover:bg-blue-600 hover:text-white focus:outline-none focus:ring active:bg-indigo-500"
 							onClick={handleSubmit}
 						>
 							Submit

@@ -24,7 +24,10 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<AuthProvider>
-				<body className={inter.className}>
+				<body
+					className={`inter.className bg-cover`}
+					style={{ backgroundImage: "url('/bg.svg')" }}
+				>
 					<div className="relative mx-auto max-w-4xl px-4 py-44 h-screen">
 						{children}
 					</div>

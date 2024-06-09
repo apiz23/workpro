@@ -26,7 +26,7 @@ export default function Navigation() {
 
 	return (
 		<>
-			<nav className="fixed top-5 left-1/2 transform -translate-x-1/2 w-full max-w-3xl px-5 py-3 bg-neutral-200 z-50 rounded-2xl">
+			<nav className="fixed top-5 left-1/2 transform -translate-x-1/2 w-full max-w-3xl px-5 py-3 bg-sky-200 z-50 rounded-2xl">
 				<ul className="flex justify-around">
 					{navItems.map((item, index) => (
 						<li key={index}>

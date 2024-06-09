@@ -25,10 +25,15 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<AuthProvider>
-				<body className={inter.className}>
-					<Navigation />
-					<div className="mx-auto max-w-screen-lg px-4 py-44 h-screen">
-						{children}
+				<body className={`${inter.className}`}>
+					<div
+						className="bg-blue-400 bg-cover"
+						style={{ backgroundImage: "url('/bg.svg')" }}
+					>
+						<Navigation />
+						<div className="mx-auto max-w-screen-lg px-4 py-44 h-screen">
+							{children}
+						</div>
 					</div>
 				</body>
 			</AuthProvider>

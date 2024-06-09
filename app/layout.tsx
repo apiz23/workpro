@@ -7,6 +7,14 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
 	title: "Work Pro",
+	icons: {
+		icon: [
+			{
+				url: "/logo.png",
+				href: "/logo.png",
+			},
+		],
+	},
 };
 
 export default function RootLayout({

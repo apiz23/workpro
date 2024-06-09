@@ -41,30 +41,30 @@ export default function Page() {
 				Emergency Leaving
 			</h2>
 			<div className="my-10">
-				<div className="flex justify-between px-5">
-					<button
-						className={`${
-							selectedTab === "clockIn"
-								? "bg-indigo-600 text-white"
-								: "bg-white text-indigo-600"
-						} py-2 px-4 rounded-lg border border-r-0 border-gray-300`}
-						onClick={() => setSelectedTab("clockIn")}
-					>
-						Clock In
-					</button>
-					<button
-						className={`${
-							selectedTab === "clockOut"
-								? "bg-indigo-600 text-white"
-								: "bg-white text-indigo-600"
-						} py-2 px-4 rounded-lg border border-l-0 border-gray-300`}
-						onClick={() => setSelectedTab("clockOut")}
-					>
-						Clock Out
-					</button>
-				</div>
 				<Card className="border-none shadow-none">
 					<CardContent className="py-8">
+						<div className="flex justify-between mb-10">
+							<button
+								className={`${
+									selectedTab === "clockIn"
+										? "bg-indigo-600 text-white"
+										: "bg-white text-indigo-600"
+								} py-2 px-4 rounded-lg border border-r-0 border-gray-300`}
+								onClick={() => setSelectedTab("clockIn")}
+							>
+								Clock In
+							</button>
+							<button
+								className={`${
+									selectedTab === "clockOut"
+										? "bg-indigo-600 text-white"
+										: "bg-white text-indigo-600"
+								} py-2 px-4 rounded-lg border border-l-0 border-gray-300`}
+								onClick={() => setSelectedTab("clockOut")}
+							>
+								Clock Out
+							</button>
+						</div>
 						<div className="mb-5 grid grid-cols-1">
 							<Input placeholder="Time" onChange={(e) => setTime(e.target.value)} />
 						</div>
