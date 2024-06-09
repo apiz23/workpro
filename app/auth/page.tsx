@@ -13,11 +13,13 @@ import supabase from "@/lib/supabase";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "sonner";
 
 export default function Login() {
 	const router = useRouter();
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
+	const [userType, setUserType] = useState("");
 
 	const handleSubmit = async (event: any) => {
 		event.preventDefault();
@@ -32,26 +34,25 @@ export default function Login() {
 				.select("username, password, type")
 				.eq("username", username)
 				.single();
-
-			console.log(data);
 			if (error) {
-				console.error("Error fetching user data:", error);
+				toast.error("Error fetching user data");
 				return;
 			}
 
 			if (data && data.username === username && data.password === password) {
-				sessionStorage.setItem("logged-in", "true");
 				sessionStorage.setItem("user-id", data.username);
-				if (data.type === "worker") {
+				if (userType === "worker") {
+					sessionStorage.setItem("logged-in", "true");
 					router.push("/dashboard");
-				} else {
+				} else if (userType === "admin" && data.type !== "worker") {
+					sessionStorage.setItem("logged-in", "true");
 					router.push("/mainPanel");
 				}
 			} else {
-				console.error("Invalid username");
+				toast.error("Invalid username");
 			}
 		} catch (error) {
-			console.error("Unexpected login error:", error);
+			toast.error("Unexpected login error");
 		}
 	};
 
@@ -77,6 +78,39 @@ export default function Login() {
 							onChange={(e) => setPassword(e.target.value)}
 						/>
 					</div>
+					<fieldset className="grid grid-cols-2 gap-4">
+						<div>
+							<label className="flex cursor-pointer justify-between gap-4 rounded-lg border border-gray-100 bg-white p-4 text-sm font-medium shadow-sm hover:border-gray-200 has-[:checked]:border-blue-500 has-[:checked]:ring-1 has-[:checked]:ring-blue-500">
+								<div>
+									<p className="text-gray-700">Worker</p>
+								</div>
+
+								<input
+									type="radio"
+									name="userType"
+									value="worker"
+									id="worker"
+									className="size-5 border-gray-300 text-blue-500"
+									onChange={(e) => setUserType(e.target.value)}
+								/>
+							</label>
+						</div>
+						<div>
+							<label className="flex cursor-pointer justify-between gap-4 rounded-lg border border-gray-100 bg-white p-4 text-sm font-medium shadow-sm hover:border-gray-200 has-[:checked]:border-blue-500 has-[:checked]:ring-1 has-[:checked]:ring-blue-500">
+								<div>
+									<p className="text-gray-700">Admin</p>
+								</div>
+								<input
+									type="radio"
+									value="admin"
+									name="userType"
+									id="admin"
+									className="size-5 border-gray-300 text-blue-500"
+									onChange={(e) => setUserType(e.target.value)}
+								/>
+							</label>
+						</div>
+					</fieldset>
 				</CardContent>
 				<CardFooter>
 					<Link href="/dashboard">

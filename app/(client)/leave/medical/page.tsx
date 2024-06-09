@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import supabase from "@/lib/supabase";
 import { v4 as uuidv4 } from "uuid";
+import { toast } from "sonner";
 
 export default function Page() {
 	const [selectedRange, setSelectedRange] = useState(null);
@@ -33,7 +34,7 @@ export default function Page() {
 				.upload(uniqueId, selectedFile);
 
 			if (fileError) {
-				console.error("Error uploading file:", fileError);
+				toast.error("Error uploading file");
 				return;
 			}
 
@@ -45,19 +46,20 @@ export default function Page() {
 
 			const { data, error } = await supabase.from("medical-leaves").insert([
 				{
-					user_id: sessionStorage.getItem("user-id"), 
+					user_id: sessionStorage.getItem("user-id"),
 					date_range: selectedRange,
 					medical_certificate_url: fileUrl,
 				},
 			]);
+			toast.success("Inserted Request");
 
 			if (error) {
-				console.error("Error inserting data:", error);
+				toast.error("Error inserting data");
 				return;
 			}
 			setMedUrl(fileUrl);
 		} catch (error) {
-			console.error("Unexpected error:", error);
+			toast.error("Unexpected error");
 		}
 	};
 

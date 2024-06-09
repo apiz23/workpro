@@ -6,16 +6,24 @@ import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
-	DropdownMenuLabel,
-	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { LogOut } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function Navigation() {
+	const router = useRouter();
+
 	const navItems = [
 		{ name: "Home", href: "/dashboard" },
 		{ name: "Attendance", href: "/attendance" },
 	];
+
+	const handleExit = () => {
+		sessionStorage.clear();
+		router.push("/auth");
+	};
+
 	return (
 		<>
 			<nav className="fixed top-5 left-1/2 transform -translate-x-1/2 w-full max-w-3xl px-5 py-3 bg-neutral-200 z-50 rounded-2xl">
@@ -30,7 +38,6 @@ export default function Navigation() {
 					<DropdownMenu>
 						<DropdownMenuTrigger>Leave</DropdownMenuTrigger>
 						<DropdownMenuContent>
-							{/* <DropdownMenuLabel>My Account</DropdownMenuLabel> */}
 							<Link href={"/leave/holiday"}>
 								<DropdownMenuItem>Holiday</DropdownMenuItem>
 							</Link>
@@ -42,6 +49,7 @@ export default function Navigation() {
 							</Link>
 						</DropdownMenuContent>
 					</DropdownMenu>
+					<LogOut className="h-6 w-6 hover:cursor-pointer" onClick={handleExit} />
 				</ul>
 			</nav>
 		</>

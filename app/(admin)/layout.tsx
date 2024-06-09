@@ -25,7 +25,9 @@ export default function RootLayout({
 		<html lang="en">
 			<AuthProvider>
 				<body className={inter.className}>
-					<div className="mx-auto max-w-4xl px-4 py-44 h-screen">{children}</div>
+					<div className="relative mx-auto max-w-4xl px-4 py-44 h-screen">
+						{children}
+					</div>
 				</body>
 			</AuthProvider>
 		</html>

@@ -6,6 +6,7 @@ import { DatePickerWithRange } from "@/components/datePickerRange";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import supabase from "@/lib/supabase";
+import { toast } from "sonner";
 
 export default function Page() {
 	const [selectedRange, setSelectedRange] = useState(null);
@@ -26,18 +27,15 @@ export default function Page() {
 			const { data, error } = await supabase
 				.from("holiday-leaves")
 				.insert([{ user_id: userId, date_range: selectedRange, reason: reasons }]);
-
+			toast.success("Inserted Request");
 			if (error) {
-				console.error("Error inserting data:", error);
+				toast.error("Error inserting data");
 				return;
 			}
-
-			console.log("Data inserted successfully:", data);
-
 			setSelectedRange(null);
 			setReasons("");
 		} catch (error) {
-			console.error("Unexpected error:", error);
+			toast.error("Unexpected error");
 		}
 	};
 
