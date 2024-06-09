@@ -43,6 +43,7 @@ interface HolidayLeave {
 	date_range: string | null;
 	reason: string | null;
 	created_at: string;
+	status: number;
 }
 
 interface MedicalLeave {
@@ -51,6 +52,7 @@ interface MedicalLeave {
 	date_range: string | null;
 	medical_certificate_url: string | null;
 	created_at: string;
+	status: number;
 }
 
 interface EmergencyLeave {
@@ -60,6 +62,7 @@ interface EmergencyLeave {
 	created_at: string;
 	time_left: string | null;
 	date_leave: string | null;
+	status: number;
 }
 
 export default function Page() {
