@@ -38,7 +38,7 @@ export default function Page() {
 	return (
 		<div>
 			<h2 className="scroll-m-20 border-b pb-2 md:text-5xl text-3xl font-semibold tracking-tight first:mt-0">
-				Emergency Leaving
+				Attendance
 			</h2>
 			<div className="my-10">
 				<Card className="border-none shadow-none">
