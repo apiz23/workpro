@@ -231,6 +231,17 @@ export default function Page() {
 		}
 	};
 
+	const handleDownload = async (url: any) => {
+		try {
+			const { data } = supabase.storage
+				.from("medical-certificate")
+				.getPublicUrl(url);
+			window.open(data.publicUrl, "_blank");
+		} catch (error) {
+			toast.error("Error Downloading");
+		}
+	};
+
 	const renderTable = () => {
 		if (selectedTable === "holiday") {
 			return (
@@ -369,15 +380,14 @@ export default function Page() {
 													<div className="p-2">
 														Medical Certificate:
 														{leave.medical_certificate_url ? (
-															<Button className="ms-5">
-																<a
-																	href={leave.medical_certificate_url}
-																	target="_blank"
-																	rel="noopener noreferrer"
+															<>
+																<Button
+																	className="ms-5"
+																	onClick={() => handleDownload(leave.medical_certificate_url)}
 																>
 																	View
-																</a>
-															</Button>
+																</Button>
+															</>
 														) : (
 															"N/A"
 														)}

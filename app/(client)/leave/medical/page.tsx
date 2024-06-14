@@ -42,7 +42,7 @@ export default function Page() {
 				.from("public-bucket")
 				.getPublicUrl(`medical-certificate/${fileData?.path}`);
 
-			const fileUrl = fileUrlResponse.data.publicUrl;
+			const fileUrl = uniqueId;
 
 			const { data, error } = await supabase.from("medical-leaves").insert([
 				{

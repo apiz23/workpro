@@ -27,7 +27,7 @@ export default function RootLayout({
 			<AuthProvider>
 				<body className={`${inter.className}`}>
 					<div
-						className="bg-blue-400 bg-cover"
+						className="bg-blue-400 bg-cover min-h-screen"
 						style={{ backgroundImage: "url('/bg.svg')" }}
 					>
 						<Navigation />
