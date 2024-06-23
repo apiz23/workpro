@@ -44,7 +44,7 @@ export default function Page() {
 
 			const fileUrl = uniqueId;
 
-			const { data, error } = await supabase.from("medical-leaves").insert([
+			const { data, error } = await supabase.from("medical_leaves").insert([
 				{
 					user_id: sessionStorage.getItem("user-id"),
 					date_range: selectedRange,

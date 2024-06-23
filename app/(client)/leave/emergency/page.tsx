@@ -25,7 +25,7 @@ export default function Page() {
 		try {
 			const userId = sessionStorage.getItem("user-id");
 
-			const { data, error } = await supabase.from("emergency-leaves").insert([
+			const { data, error } = await supabase.from("emergency_leaves").insert([
 				{
 					user_id: userId,
 					date_leave: selectedDate,

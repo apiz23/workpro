@@ -25,7 +25,7 @@ export default function Page() {
 			const userId = sessionStorage.getItem("user-id");
 
 			const { data, error } = await supabase
-				.from("holiday-leaves")
+				.from("holiday_leaves")
 				.insert([{ user_id: userId, date_range: selectedRange, reason: reasons }]);
 			toast.success("Inserted Request");
 			if (error) {

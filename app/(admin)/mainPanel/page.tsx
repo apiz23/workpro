@@ -76,7 +76,7 @@ export default function Page() {
 	useEffect(() => {
 		const fetchHolidayLeaves = async () => {
 			try {
-				const { data, error } = await supabase.from("holiday-leaves").select("*");
+				const { data, error } = await supabase.from("holiday_leaves").select("*");
 
 				if (error) {
 					toast.error("Error fetching holiday leaves");
@@ -91,7 +91,7 @@ export default function Page() {
 
 		const fetchMedicalLeaves = async () => {
 			try {
-				const { data, error } = await supabase.from("medical-leaves").select("*");
+				const { data, error } = await supabase.from("medical_leaves").select("*");
 
 				if (error) {
 					toast.error("Error fetching medical leaves");
@@ -106,7 +106,7 @@ export default function Page() {
 
 		const fetchEmergencyLeaves = async () => {
 			try {
-				const { data, error } = await supabase.from("emergency-leaves").select("*");
+				const { data, error } = await supabase.from("emergency_leaves").select("*");
 
 				if (error) {
 					toast.error("Error fetching emergency leaves");
@@ -288,7 +288,7 @@ export default function Page() {
 														<Button
 															variant="default"
 															className="inline-block px-4 py-2 text-sm font-medium focus:relative"
-															onClick={() => handleApprove(leave.id, "holiday-leaves", 1)}
+															onClick={() => handleApprove(leave.id, "holiday_leaves", 1)}
 														>
 															Approve
 														</Button>
@@ -314,7 +314,7 @@ export default function Page() {
 																		variant="destructive"
 																		className="inline-block px-4 py-2 text-sm font-medium focus:relative"
 																		onClick={() =>
-																			handleReject(leave.id, "holiday-leaves", 0, rejectReason)
+																			handleReject(leave.id, "holiday_leaves", 0, rejectReason)
 																		}
 																	>
 																		Confirm
@@ -400,7 +400,7 @@ export default function Page() {
 														<Button
 															variant="default"
 															className="inline-block px-4 py-2 text-sm font-medium focus:relative"
-															onClick={() => handleApprove(leave.id, "medical-leaves", 1)}
+															onClick={() => handleApprove(leave.id, "medical_leaves", 1)}
 														>
 															Approve
 														</Button>
@@ -425,7 +425,7 @@ export default function Page() {
 																		variant="destructive"
 																		className="inline-block px-4 py-2 text-sm font-medium focus:relative"
 																		onClick={() =>
-																			handleReject(leave.id, "medical-leaves", 0, rejectReason)
+																			handleReject(leave.id, "medical_leaves", 0, rejectReason)
 																		}
 																	>
 																		Confirm
@@ -499,7 +499,7 @@ export default function Page() {
 														<Button
 															variant="default"
 															className="inline-block px-4 py-2 text-sm font-medium focus:relative"
-															onClick={() => handleApprove(leave.id, "emergency-leaves", 1)}
+															onClick={() => handleApprove(leave.id, "emergency_leaves", 1)}
 														>
 															Approve
 														</Button>
@@ -525,7 +525,7 @@ export default function Page() {
 																		variant="destructive"
 																		className="inline-block px-4 py-2 text-sm font-medium focus:relative"
 																		onClick={() =>
-																			handleReject(leave.id, "emergency-leaves", 0, rejectReason)
+																			handleReject(leave.id, "emergency_leaves", 0, rejectReason)
 																		}
 																	>
 																		Confirm
